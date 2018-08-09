@@ -1,0 +1,21 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "tslint.enable": true,
+    "tslint.alwaysShowRuleFailuresAsWarnings": true,
+    "typescript.referencesCodeLens.enabled": true,
+    "window.zoomLevel": 0,
+    "files.exclude": {
+        "**/.git": true,
+        "node_modules": true,
+        ".vscode/chrome/**": true
+    }, 
+    "files.watcherExclude": {
+		".vscode/chrome/**": true
+	},
+    "search.exclude": {
+		"dist/**": true
+	},
+    "html.format.extraLiners": "!",
+    "html.format.indentInnerHtml": true,
+    "editor.minimap.enabled": false
+}
