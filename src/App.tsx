@@ -1,11 +1,15 @@
 import DevTools from 'mobx-react-devtools';
 import * as React from 'react';
 import TodoList from 'src/components/TodoList';
+import { RestClient } from 'typed-rest-client/RestClient';
 import './App.css';
 import logo from './logo.svg';
 import TodoStore from './model/TodoStore';
-const todoStore = new TodoStore();
 
+const client = new RestClient("todosapp", "http://icmtasks.getsandbox.com");
+const todoStore = new TodoStore(client);
+
+todoStore.loadTodos();
 class App extends React.Component {
   public render() {
     return (
