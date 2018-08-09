@@ -1,6 +1,7 @@
 import { observer } from "mobx-react";
 import * as React from 'react';
-import { TodoTask } from "src/model/TodoTask";
+import TodoTask from "src/model/TodoTask";
+import './TodoView.css';
 
 export interface ITodoViewProps { todo: TodoTask; }
 
@@ -9,7 +10,7 @@ export class TodoView extends React.Component<ITodoViewProps, {}> {
   public render() {
     const todo = this.props.todo;
     return (
-      <li onDoubleClick={ this.onRename }>
+      <li className="TodoView" onDoubleClick={ this.onRename }>
         <input
           type='checkbox'
           checked={ todo.completed }
@@ -34,3 +35,5 @@ export class TodoView extends React.Component<ITodoViewProps, {}> {
     todo.description = prompt('Task name', todo.description) || todo.description;
   }
 }
+
+export default TodoView;

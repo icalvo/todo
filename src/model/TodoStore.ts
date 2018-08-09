@@ -1,5 +1,5 @@
 import { computed, observable } from "mobx";
-import { TodoTask } from "./TodoTask";
+import TodoTask from "./TodoTask";
 
 export class TodoStore {
     @observable public todos: TodoTask[] = [];
@@ -23,3 +23,5 @@ export class TodoStore {
         this.todos.push(new TodoTask(task));
     }
 }
+
+export default TodoStore;

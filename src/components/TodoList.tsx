@@ -1,7 +1,8 @@
 import { observer } from "mobx-react";
 import * as React from 'react';
-import { TodoView } from "src/components/TodoView";
-import { TodoStore } from "src/model/TodoStore";
+import TodoView from "src/components/TodoView";
+import TodoStore from "src/model/TodoStore";
+import './TodoList.css';
 
 export interface ITodoListProps { store: TodoStore; }
 
@@ -11,7 +12,8 @@ export class TodoList extends React.Component<ITodoListProps, {}> {
     const store = this.props.store;
     return (
       <div>
-        { store.report }
+        <p>{ store.report }</p>
+        <input type="text" />
         <ul>
         { store.todos.map(
           (todo, idx) => <TodoView todo={ todo } key={ idx } />
@@ -28,3 +30,5 @@ export class TodoList extends React.Component<ITodoListProps, {}> {
     this.props.store.addTodo(prompt('Enter a new todo:', 'coffee plz') || "");
   }
 }
+
+export default TodoList;

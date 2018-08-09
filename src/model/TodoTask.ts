@@ -10,3 +10,5 @@ export class TodoTask {
         this.completed = false;
     }
 }
+
+export default TodoTask;
