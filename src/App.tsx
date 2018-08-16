@@ -6,7 +6,7 @@ import './App.css';
 import logo from './logo.svg';
 import TodoStore from './model/TodoStore';
 
-const client = new RestClient("todosapp", "http://icmtasks.getsandbox.com");
+const client = new RestClient("todosapp", "http://localhost:3001");
 const todoStore = new TodoStore(client);
 
 todoStore.loadTodos();

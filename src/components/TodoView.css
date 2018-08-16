@@ -3,3 +3,7 @@ li.TodoView {
     list-style: none;
     margin: 0;
   }
+
+li.strike {
+  text-decoration: line-through;
+}

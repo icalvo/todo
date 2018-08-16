@@ -25,13 +25,15 @@ class TodoStore {
         return `Next todo: "${this.todos[0].description}". ` +
             `Progress: ${this.completedTodosCount}/${this.todos.length}`;
     }
-    public addTodo(description: string) {
-        this.todos.push(
-            new TodoTask(
-                description,
-                async (memento) => {
-                    await this.transportLayer.create("/tasks", memento);
-            }));
+
+    public async addTodo(description: string) {
+        const todo = TodoTask.create(
+            description,
+            async (memento) => {
+                await this.transportLayer.replace("/tasks/" + memento._id, memento);
+            });
+        await this.transportLayer.replace("/tasks/" + todo.memento._id, todo.memento);
+        this.todos.push(todo);
     }
 
     public async deleteTodo(id: string) {
@@ -42,7 +44,6 @@ class TodoStore {
         }
     }
 
-    
     public loadTodos() {
         this.isLoading = true;
         this.transportLayer.get<ITodoMemento[]>('/tasks').then((res) =>{
@@ -59,24 +60,15 @@ class TodoStore {
         });
     }
 
-    private updateTodoFromServer(json: ITodoMemento) {
-        let todo = this.todos.find(x => x.id === json.id);
-        if (!todo) {
-            todo = new TodoTask(
-                json.description,
-                (memento) => {
-                    this.transportLayer.create<ITodoMemento>("/tasks", memento);
-                },
-                json.id);
-            this.todos.push(todo);
-        }
+    private async updateTodoFromServer(json: ITodoMemento) {
+        const todo = TodoTask.fromMemento(
+            json,
+            async (memento) => {
+                await this.transportLayer.replace<ITodoMemento>("/tasks/" + memento._id, memento);
+            });
+        await this.transportLayer.replace<ITodoMemento>("/tasks/" + todo.memento._id, todo.memento);
+        this.todos.push(todo);
 
-        if (json.isDeleted) {
-            this.removeTodo(todo);
-        }
-        else {
-            todo.updateFromJson(json);
-        }
     }
 
     /**
@@ -85,7 +77,7 @@ class TodoStore {
     private removeTodo(todo: TodoTask) {
         this.todos.splice(this.todos.indexOf(todo), 1);
         todo.dispose();
-    }    
+    }
 }
 
 export default TodoStore;

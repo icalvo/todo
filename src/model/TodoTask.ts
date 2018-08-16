@@ -1,14 +1,22 @@
-import { computed, IReactionDisposer, IReactionPublic, observable, reaction } from "mobx";
-import * as uuid from 'node-uuid';
+import { computed, IReactionDisposer, observable, reaction } from "mobx";
+import * as uuid from 'uuid';
 
 export interface ITodoMemento {
-    id: string,
+    _id: string,
     isDeleted: boolean,
     description: string,
     completed: boolean
 }
 
 export class TodoTask {
+    public static create(description: string, createFunc: (arg: ITodoMemento) => void) {
+        return new this(description, createFunc);
+    }
+
+    public static fromMemento(memento: ITodoMemento, createFunc: (arg: ITodoMemento) => void) {
+        return new this(memento, createFunc);
+    }
+
     @observable public id: string;
     @observable public description: string;
     @observable public completed: boolean;
@@ -17,25 +25,32 @@ export class TodoTask {
     private autoSave = true;
     private saveHandler: IReactionDisposer;
 
-    constructor(description: string, effect: (arg: ITodoMemento, r: IReactionPublic) => void, id = uuid.v4()) {
-        this.description = description;
-        this.completed = false;
+    private constructor(description: string | ITodoMemento, createFunc: (arg: ITodoMemento) => void) {
+        if (typeof description === "string") {
+            this.id = uuid.v4();
+            this.description = description;
+        }
+        else {
+            this.id = description._id;
+            this.description = description.description;
+            this.completed = description.completed;
+        }
+
         this.saveHandler = reaction(
             () => this.memento,
             (memento, r) => {
                 if (this.autoSave) {
-                    effect(memento, r);
+                    createFunc(memento);
                 }
             }
         );
     }
 
-
     @computed get memento(): ITodoMemento {
         return {
+            _id: this.id,
             completed: this.completed,
             description: this.description,
-            id: this.id,
             isDeleted: false,
         };
     }
@@ -44,7 +59,7 @@ export class TodoTask {
      * Update this todo with information from the server
      */
     public updateFromJson(json: ITodoMemento) {
-        // make sure our changes aren't send back to the server
+        // make sure our changes aren't sent back to the server
         this.autoSave = false;
         this.completed = json.completed;
         this.description = json.description;

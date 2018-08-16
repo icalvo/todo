@@ -1,3 +1,4 @@
+import *  as classNames from 'classnames';
 import { observer } from "mobx-react";
 import * as React from 'react';
 import TodoTask from "src/model/TodoTask";
@@ -10,7 +11,7 @@ export class TodoView extends React.Component<ITodoViewProps, {}> {
   public render() {
     const todo = this.props.todo;
     return (
-      <li className="TodoView" onDoubleClick={ this.onRename }>
+      <li className={ classNames("TodoView", { "strike": todo.completed }) } onDoubleClick={ this.onRename }>
         <input
           type='checkbox'
           checked={ todo.completed }
