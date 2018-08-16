@@ -1,0 +1,19 @@
+### Get all tasks
+GET http://localhost:3001/tasks
+Content-Type: application/json
+
+### Get one task
+GET http://localhost:3001/tasks/77
+Content-Type: application/json
+
+### Upsert task
+PUT http://localhost:3001/tasks/78
+Content-Type: application/json
+
+{
+    "description": "learn mobx"
+}
+
+### Delete task
+DELETE http://localhost:3001/tasks/77
+Content-Type: application/json
