@@ -28,5 +28,11 @@
     "patch-package": "^5.1.1",
     "react-render-counter": "^1.0.1",
     "typescript": "^3.0.1"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
