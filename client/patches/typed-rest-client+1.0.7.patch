@@ -1,0 +1,12 @@
+patch-package
+--- a/node_modules/typed-rest-client/Util.js
++++ b/node_modules/typed-rest-client/Util.js
+@@ -23,7 +23,7 @@ function getUrl(resource, baseUrl) {
+     resultantUrl.protocol = resultantUrl.protocol || base.protocol;
+     resultantUrl.auth = resultantUrl.auth || base.auth;
+     resultantUrl.host = resultantUrl.host || base.host;
+-    resultantUrl.pathname = path.posix.resolve(base.pathname, resultantUrl.pathname);
++    resultantUrl.pathname = path.resolve(base.pathname, resultantUrl.pathname);
+     let res = url.format(resultantUrl);
+     return res;
+ }

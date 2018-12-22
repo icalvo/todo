@@ -8,7 +8,7 @@
     "mobx-react": "^5.2.3",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts-ts": "2.17.0",
+    "react-scripts-ts": "^4.0.8",
     "typed-rest-client": "^1.0.7"
   },
   "scripts": {
@@ -25,6 +25,7 @@
     "@types/react-dom": "^16.0.7",
     "@types/uuid": "^3.4.3",
     "mobx-react-devtools": "^6.0.2",
+    "patch-package": "^5.1.1",
     "react-render-counter": "^1.0.1",
     "typescript": "^3.0.1"
   }
